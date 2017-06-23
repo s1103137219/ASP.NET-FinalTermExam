@@ -1,0 +1,74 @@
+﻿@model WebApplication3.Models.CustomerSearchArg
+@{
+    ViewBag.Title = "Index";
+}
+
+@using (Html.BeginForm("Index", "Customer", FormMethod.Post, new { id = "form1" }))
+{
+
+    <div>
+        <div id="SearchPart">
+            <h1>客戶資料查詢</h1>
+
+            <table>
+                <tr>
+                    <td>客戶編號 @Html.TextBoxFor(model => model.CustomerID)</td>
+                </tr>
+                <tr>
+                    <td>客戶名稱 @Html.TextBoxFor(model => model.CompanyName)</td>
+                </tr>
+                <tr>
+                    <td>聯絡人姓名 @Html.TextBoxFor(model => model.ContactName)</td>
+                </tr>
+                <tr>
+                    <td>聯絡人職稱 @Html.DropDownListFor(model => model.ContactTitle, (List<SelectListItem>)@ViewBag.contacttitle)</td>
+                </tr>               
+                <tr>
+                    <td><input type="submit" value="查詢"/><input type="reset" value="清除"/><input type="reset" value="新增客戶" /></td>
+                </tr>
+            </table>
+
+        </div>
+        <div id="SearchresultPart">
+            <h1>查詢結果</h1>
+            @if (ViewBag.Data != null)
+            {
+                <table>
+                    <tr>
+                        <td>客戶編號</td>
+                        <td>客戶名稱</td>
+                        <td>聯絡人姓名</td>
+                        <td>聯絡人職稱</td>
+                        <td></td>
+                        <td></td>
+
+                    </tr>
+
+                    @foreach (var item in (List<WebApplication3.Models.Customer>)ViewBag.Data)
+                    {
+                        <tr>
+                            <td>@item.CustomerID</td>
+                            <td>@item.CompanyName</td>
+                            <td>@item.ContactName</td>
+                            <td>@item.ContactTitle</td>
+                            <td><button type="submit" name="editbtn" value="@item.CustomerID">修改</button></td>
+                            <td><button type="submit" name="delbtn" value="@item.CustomerID">刪除</button></td>
+                        </tr>
+                    }
+
+
+                </table>
+            }
+            else
+            {
+                <div>查無資料</div>
+            }
+        </div>
+
+
+
+
+    </div>
+
+}
+
